@@ -1,45 +1,40 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class SVGComponent extends Component {
   render() {
     return (
-      <svg {...this.props} viewBox='-5 -5 210 210'>
-        {this.props.children}
-      </svg>
+      <React.Fragment>
+        <svg {...this.props} viewBox='-5 -5 210 210'>
+          {this.props.children}
+        </svg>
+      </React.Fragment>
     );
   }
 }
 
 class Circle extends Component {
   render() {
-    return <circle {...this.props}>{this.props.children}</circle>;
+    return (
+      <React.Fragment>
+        <circle {...this.props}>{this.props.children}</circle>
+      </React.Fragment>
+    );
   }
 }
 
-class Rect extends Component {
+class Rect extends React.PureComponent {
   render() {
-    return <rect {...this.props}>{this.props.children}</rect>;
+    return (
+      <React.Fragment>
+        <rect {...this.props}>{this.props.children}</rect>
+      </React.Fragment>
+    );
   }
 }
 
 class MakeCircles extends Component {
-  state = {
-    dots: [
-      {
-        x: 25,
-        y: 14
-      },
-      {
-        x: 44,
-        y: 44
-      },
-      {
-        x: 125,
-        y: 114
-      }
-    ]
-  };
-
   render() {
     return (
       <div>
@@ -61,9 +56,10 @@ class MakeCircles extends Component {
             stroke='#1D65A6'
             strokeWidth='2'
           />
-          {this.state.dots.map(d => {
+          {this.props.dots.map(d => {
             return (
               <Circle
+                key={d.id}
                 cx={d.x}
                 cy={d.y}
                 r='1'
@@ -79,4 +75,15 @@ class MakeCircles extends Component {
   }
 }
 
-export default MakeCircles;
+MakeCircles.propTypes = {
+  dots: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  dots: state.dots
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(MakeCircles);

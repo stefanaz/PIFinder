@@ -45,7 +45,7 @@ class MakeCircles extends Component {
             r='100'
             fill='none'
             stroke='#00743F'
-            strokeWidth='2'
+            strokeWidth='4'
           />
           <Rect
             x='0'
@@ -54,7 +54,7 @@ class MakeCircles extends Component {
             height='200'
             fill='none'
             stroke='#1D65A6'
-            strokeWidth='2'
+            strokeWidth='4'
           />
           {this.props.dots.map(d => {
             return (
@@ -64,7 +64,7 @@ class MakeCircles extends Component {
                 cy={d.y}
                 r='1'
                 fill='lightgrey'
-                stroke='black'
+                stroke='lightgrey'
                 strokeWidth='1'
               />
             );

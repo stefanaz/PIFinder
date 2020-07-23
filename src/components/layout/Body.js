@@ -13,7 +13,11 @@ import styles from "./Body.module.css";
 
 const Body = ({ setDot, removeDots, dots }) => {
   const insideCircle = () => {
-    return dots.length;
+    return dots.filter(d => {
+      return (
+        Math.pow(d.x - 100, 2) + Math.pow(d.y - 100, 2) <= Math.pow(100, 2)
+      );
+    }).length;
   };
 
   const insideSquare = () => {
@@ -88,7 +92,8 @@ const Body = ({ setDot, removeDots, dots }) => {
           direction='row'
         >
           <p>
-            Number of entries inside a Circle: <strong>{insideCircle()}</strong>
+            Number (<strong>N1</strong>) of entries inside a Circle:{" "}
+            <strong>{insideCircle()}</strong>
           </p>
         </Grid>
         <Grid
@@ -98,8 +103,39 @@ const Body = ({ setDot, removeDots, dots }) => {
           direction='row'
         >
           <p>
-            Number of entries inside a Square: <strong>{44}</strong>
+            Number (<strong>N2</strong>) of entries inside a Square:{" "}
+            <strong>{insideSquare()}</strong>
           </p>
+        </Grid>
+        <Grid
+          container
+          spacing={3}
+          style={{ width: "100%", marginTop: "5%" }}
+          direction='row'
+        >
+          <strong>Square</strong>: a*a = <strong>N1</strong>;
+        </Grid>
+        <Grid
+          container
+          spacing={3}
+          style={{ width: "100%", marginTop: "5%" }}
+          direction='row'
+        >
+          <strong>Circle</strong>: PI*r*r = PI*a*a/4 = <strong>N2</strong>;
+        </Grid>
+
+        <Grid
+          container
+          spacing={3}
+          style={{ width: "100%", marginTop: "5%" }}
+          direction='row'
+        >
+          <strong>PI</strong> = 4 * N2/N1 ={" "}
+          <strong>
+            {insideSquare() !== 0
+              ? (4 * insideCircle()) / insideSquare()
+              : "Not defined"}
+          </strong>
         </Grid>
       </Grid>
     </Grid>

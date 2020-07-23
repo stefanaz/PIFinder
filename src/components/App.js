@@ -7,18 +7,21 @@ import MainSvg from "./svg/MainSvg";
 function App() {
   return (
     <div className='App'>
-      <AppBar />
+      {/* <AppBar /> */}
       <Container maxWidth='lg'>
-        <div style={{ backgroundColor: "lightgrey", height: "100vh" }}>
-          <MainSvg></MainSvg>
+        <div style={{ backgroundColor: "lightgrey", height: "70vh" }}>
+          <MainSvg style={svgStyle}></MainSvg>
           <Button variant='contained' color='primary'>
             Primary
           </Button>
-          <svg></svg>
         </div>
       </Container>
     </div>
   );
 }
+
+const svgStyle = {
+  marginTop: "50px"
+};
 
 export default App;

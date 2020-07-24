@@ -1,167 +1,43 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-
-import { setDot, removeDots } from "../../actions/dot";
 
 import MainSvg from "../svg/MainSvg";
-import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
-import styles from "./Body.module.css";
+import ControlContent from "./ControlContent";
+import Description from "./Description";
 
-const Body = ({ setDot, removeDots, dots }) => {
-  const insideCircle = () => {
-    return dots.filter(d => {
-      return (
-        Math.pow(d.x - 100, 2) + Math.pow(d.y - 100, 2) <= Math.pow(100, 2)
-      );
-    }).length;
-  };
-
-  const insideSquare = () => {
-    return dots.length;
-  };
-
+const Body = props => {
   return (
-    <Grid container spacing={3} style={{ width: "100%", marginTop: "2%" }}>
+    <Grid container spacing={3} style={mainGrid}>
       <Grid item xs={12} sm={6}>
         <MainSvg style={svgStyle}></MainSvg>
       </Grid>
       <Grid item xs={12} sm={6} direction='column' container>
-        <Grid
-          container
-          spacing={3}
-          style={{ width: "100%", marginTop: "2%" }}
-          direction='row'
-        >
-          <Grid item xs={12} sm={4}>
-            {" "}
-            <Button
-              variant='contained'
-              className={styles.button}
-              color='primary'
-              onClick={() => {
-                setDot({
-                  id: uuidv4(),
-                  x: getRandomInt(0, 200),
-                  y: getRandomInt(0, 200)
-                });
-              }}
-            >
-              Generate Dot
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            {" "}
-            <Button
-              className={styles.button}
-              variant='contained'
-              color='primary'
-              onClick={() => {
-                [...Array(100).keys()].map(() => {
-                  setDot({
-                    id: uuidv4(),
-                    x: getRandomInt(0, 200),
-                    y: getRandomInt(0, 200)
-                  });
-                });
-              }}
-            >
-              Add 100 Dots
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            {" "}
-            <Button
-              onClick={() => removeDots()}
-              className={styles.button}
-              variant='contained'
-              color='primary'
-            >
-              Remove All
-            </Button>
-          </Grid>
+        <Grid>
+          <span style={{ fontSize: "25px" }}>Funny - </span>{" "}
+          <img
+            src='https://cdn.pixabay.com/photo/2016/04/13/16/09/pi-1327145_960_720.png'
+            alt=''
+            width={25}
+            style={{ paddingTop: "10px" }}
+          />{" "}
+          <span style={{ fontSize: "25px" }}> - Finder</span>{" "}
         </Grid>
-
-        <Grid
-          container
-          spacing={3}
-          style={{ width: "100%", marginTop: "5%" }}
-          direction='row'
-        >
-          <p>
-            Number (<strong>N1</strong>) of entries inside a Circle:{" "}
-            <strong>{insideCircle()}</strong>
-          </p>
-        </Grid>
-        <Grid
-          container
-          spacing={3}
-          style={{ width: "100%", marginTop: "0%" }}
-          direction='row'
-        >
-          <p>
-            Number (<strong>N2</strong>) of entries inside a Square:{" "}
-            <strong>{insideSquare()}</strong>
-          </p>
-        </Grid>
-        <Grid
-          container
-          spacing={3}
-          style={{ width: "100%", marginTop: "5%" }}
-          direction='row'
-        >
-          <strong>Square</strong>: a*a = <strong>N1</strong>;
-        </Grid>
-        <Grid
-          container
-          spacing={3}
-          style={{ width: "100%", marginTop: "5%" }}
-          direction='row'
-        >
-          <strong>Circle</strong>: PI*r*r = PI*a*a/4 = <strong>N2</strong>;
-        </Grid>
-
-        <Grid
-          container
-          spacing={3}
-          style={{ width: "100%", marginTop: "5%" }}
-          direction='row'
-        >
-          <strong>PI</strong> = 4 * N2/N1 ={" "}
-          <strong>
-            {insideSquare() !== 0
-              ? (4 * insideCircle()) / insideSquare()
-              : "Not defined"}
-          </strong>
-        </Grid>
+        <ControlContent style={mainGrid}></ControlContent>
+        <Description style={mainGrid}></Description>
       </Grid>
     </Grid>
   );
 };
 
-const getRandomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-Body.propTypes = {
-  setDot: PropTypes.func.isRequired,
-  removeDots: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  dots: state.dots
-});
-
-export default connect(
-  mapStateToProps,
-  { setDot, removeDots }
-)(Body);
+export default Body;
 
 const svgStyle = {
   marginTop: "50px"
+};
+
+const mainGrid = {
+  width: "100%",
+  marginTop: "2%",
+  margin: "auto"
 };
